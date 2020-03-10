@@ -1,16 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IListener } from './i-listener.interface'
-import { AppEvents } from './app-events.enum';
+import { inToken } from 'src/core/in.token';
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { outToken } from 'src/core/out.token';
 
 @Injectable()
 export class ProcessHandler implements IListener {
-    event: AppEvents = AppEvents.cpu;
 
-    respond(eventData: any, outbound: any): void {
-        this.respondInternal(eventData, outbound);
+    constructor(
+        @Inject(inToken) private readonly inbound: Observable<any>,
+        @Inject(outToken) private readonly outbound: Subject<any>) {
+        inbound.pipe(tap(d => console.log(`${ProcessHandler.name}::`))).subscribe(d => this.respondInternal(d));
     }
 
-    private respondInternal (eventData: any, outbound: any) {
-        outbound.next(`${ProcessHandler.name}<<${eventData}`);
+    respond(eventData: any): void {
+        this.respondInternal(eventData);
+    }
+
+    private respondInternal(eventData: any) {
+        this.outbound.next(`${ProcessHandler.name}<<${eventData}`);
     }
 }

@@ -1,32 +1,21 @@
-import { Module, DynamicModule, Type, Provider } from '@nestjs/common';
+import { Module, DynamicModule, Type, Provider, OnModuleInit } from '@nestjs/common';
 import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { ProcessHandler } from './process.handler';
-import { IListener } from './i-listener.interface';
-import { CatParameter } from '../cat.parameter';
-import { CatService } from '../cat.service';
-type listeners = Provider<IListener>[];
+import { inToken } from 'src/core/in.token';
+import { outToken } from 'src/core/out.token';
 
 @Module({})
-export class RoutingModule {
+export class RoutingModule implements OnModuleInit {
+    onModuleInit() {
+        console.log('on module init => routing')
+    }
     static forRoot(inbound: Observable<any>, outbound: Subject<any>): DynamicModule {
-        const providers = [{ provide: ProcessHandler, useValue: new ProcessHandler() }, CatParameter, CatService];
-        RoutingModule.listen(inbound, outbound, providers);
+        const ioStreams = [
+            { provide: inToken, useValue: inbound },
+            { provide: outToken, useValue: outbound }];
         return {
             module: RoutingModule,
-            providers,
-            exports: [CatService, CatParameter]
+            providers: ioStreams,
+            exports: ioStreams
         };
-    }
-
-    static listen(inbound: Observable<any>, outbound: Subject<any>, providers: any) {
-        inbound.pipe(
-            tap(d => {
-                providers.forEach((p: any) => {
-                    p.useValue.respond(d, outbound);
-                });
-            })
-        )
-            .subscribe();
     }
 }
