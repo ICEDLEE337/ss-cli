@@ -1,4 +1,4 @@
-export class Parameter {
+export class Parameter<T> {
     name: string;
-    value: any;
+    value: T;
 }
