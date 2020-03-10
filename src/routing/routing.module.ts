@@ -18,10 +18,8 @@ export class RoutingModule {
 
     static listen(inbound: Observable<any>, outbound: Subject<any>, providers: any) {
         inbound.pipe(
-            tap(d => console.log('in router', d)),
             tap(d => {
                 providers.forEach((p: any) => {
-                    console.log('responding');
                     p.useValue.respond(d, outbound);
                 });
             })

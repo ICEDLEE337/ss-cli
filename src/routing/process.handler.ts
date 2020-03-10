@@ -7,8 +7,6 @@ export class ProcessHandler implements IListener {
     event: AppEvents = AppEvents.cpu;
 
     respond(eventData: any, outbound: any): void {
-        const msg = ProcessHandler.name + '<<' + eventData.toString() + '=';
-        console.log('blah::' + msg);
-        outbound.next(msg);
+        outbound.next(`${ProcessHandler.name}<<${eventData}`);
     }
 }
