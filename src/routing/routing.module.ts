@@ -3,16 +3,19 @@ import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ProcessHandler } from './process.handler';
 import { IListener } from './i-listener.interface';
+import { CatParameter } from '../cat.parameter';
+import { CatService } from '../cat.service';
 type listeners = Provider<IListener>[];
 
 @Module({})
 export class RoutingModule {
     static forRoot(inbound: Observable<any>, outbound: Subject<any>): DynamicModule {
-        const providers = [{ provide: ProcessHandler, useValue: new ProcessHandler() }];
+        const providers = [{ provide: ProcessHandler, useValue: new ProcessHandler() }, CatParameter, CatService];
         RoutingModule.listen(inbound, outbound, providers);
         return {
             module: RoutingModule,
-            providers
+            providers,
+            exports: [CatService, CatParameter]
         };
     }
 
