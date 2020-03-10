@@ -7,6 +7,10 @@ export class ProcessHandler implements IListener {
     event: AppEvents = AppEvents.cpu;
 
     respond(eventData: any, outbound: any): void {
+        this.respondInternal(eventData, outbound);
+    }
+
+    private respondInternal (eventData: any, outbound: any) {
         outbound.next(`${ProcessHandler.name}<<${eventData}`);
     }
 }
