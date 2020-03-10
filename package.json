@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/icedlee337/ss-cli/issues"
   },
-  "homepage": "https://github.com/icedlee337/ss-cli#readme"
+  "homepage": "https://github.com/icedlee337/ss-cli#readme",
+  "dependencies": {
+    "@nestjs/common": "^6.11.11",
+    "@nestjs/core": "^6.11.11",
+    "@onivoro/nodejs-cli-sdk": "^0.3.0",
+    "rxjs": "^6.5.4"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^6.11.11",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.0",
+    "typescript": "^3.8.3"
+  }
 }
