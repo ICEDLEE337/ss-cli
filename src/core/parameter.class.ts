@@ -1,4 +1,4 @@
 export class Parameter {
     name: string;
-    value: () => any;
+    value: any;
 }

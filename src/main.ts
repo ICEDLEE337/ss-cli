@@ -11,8 +11,7 @@ async function bootstrap() {
 
   two.subscribe(d => console.log(d));
 
-  const svc = await app.get(AppService);
-  console.log(svc);
+  await app.get(AppService);
 
   process.stdin.on('data', d => d.toString().trim() === 'exit' ? process.exit(0) : one.next(d.toString()));
 }

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { CatParameter } from './cat.parameter';
-const providers = exports = [CatService, CatParameter];
+const providers = [CatService, CatParameter];
 @Module({
     providers,
-    exports
+    exports: [...providers]
 })
 export class CatModule {}
