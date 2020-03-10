@@ -12,6 +12,7 @@
 
 import { Module, DynamicModule, Injectable } from '@nestjs/common';
 import { RoutingModule } from './routing/routing.module';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 export class Me {
@@ -21,7 +22,7 @@ export class Me {
 
 @Module({})
 export class AppModule {
-    static forRoot (inboundStream: any, outboundStream: any): DynamicModule {
+    static forRoot (inboundStream: Observable<any>, outboundStream: Subject<any>): DynamicModule {
         return {
             module: AppModule,
             imports: [RoutingModule.forRoot(inboundStream, outboundStream)],

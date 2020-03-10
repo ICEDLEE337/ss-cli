@@ -21,7 +21,8 @@ export class RoutingModule {
             tap(d => console.log('in router', d)),
             tap(d => {
                 providers.forEach((p: any) => {
-                    p.useValue.respond(d.data, outbound);
+                    console.log('responding');
+                    p.useValue.respond(d, outbound);
                 });
             })
         )

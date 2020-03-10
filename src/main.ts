@@ -8,12 +8,13 @@ const two = new Subject();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule.forRoot(one.asObservable(), two));
+
+  // todo: here to load module
   const thing = await app.get(Me);
-
-one.next('hi');
-two.subscribe(d => console.log(new Date().toISOString() + d));
-
   console.log(thing);
-  // await app.listen(3000);
+
+  two.subscribe(d => console.log(new Date().toISOString() + d));
+
+  process.stdin.on('data', d => d.toString().trim() === 'exit' ? process.exit(0) : one.next(d.toString()));
 }
 bootstrap();
