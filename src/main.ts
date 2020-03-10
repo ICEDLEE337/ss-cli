@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule, Me } from './app.module';
+import { AppModule } from './app.module';
 import { Subject } from 'rxjs';
 
 const one = new Subject();
