@@ -5,11 +5,20 @@ import { CatService } from './cat/cat.service';
 
 @Injectable()
 export class AppService {
-    constructor(@Inject(outToken) outbound: any, @Inject(inToken) inbound: any, public catService: CatService) {
-        outbound.subscribe(d => console.log([AppService.name, d].join(':out:')));
-        inbound.subscribe(d => {
-            const msg = [AppService.name, d, 'RES', new Date().toISOString(), this.catService.meow()].join(':in:');
-            outbound.next(msg);
+    private readonly header = ['pid', process.pid, AppService.name, 'listening'].join(' :: ');
+
+    constructor(
+        @Inject(outToken) outbound: any,
+        @Inject(inToken) inbound: any,
+        private readonly catService: CatService
+    ) {
+        outbound.subscribe(this.message.bind(this));
+        inbound.subscribe((input) => {
+            outbound.next(this.catService.meow(input.split('\n')[0]));
         });
+    }
+
+    message (data: any) {
+        console.log([this.header, data].join('\n'))
     }
 }

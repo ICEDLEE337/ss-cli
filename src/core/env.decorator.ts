@@ -9,6 +9,6 @@ export const Arg = (ctrFn: Function) =>
         return class extends constructor {
             value = args[key];
             typedValue = ctrFn(args[key]);
-            key = key;
+            name = constructor.name;
         };
     };

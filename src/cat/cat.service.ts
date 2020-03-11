@@ -7,12 +7,16 @@ export class CatService {
   constructor(
     private readonly count: CatCountParameter,
     private readonly color: CatColorParameter
-    ) {
+  ) {
 
   }
 
-  meow () {
-    return `i need ${this.count.value} cats that are ${this.color.value}`;
+  meow(memberName: string) {
+    const member = this[memberName];
+    if (!member) {
+      return `${memberName} is not defined in: ${Object.keys(this).sort().join(', ')}`;
+    };
+    return `${member.key}: ${typeof member.value} = ${member.value};`;
   }
 
 }
