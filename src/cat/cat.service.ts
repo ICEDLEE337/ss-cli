@@ -1,22 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { CatCountParameter } from './cat-count.parameter';
-import { CatColorParameter } from './cat-color.parameter';
+import { CatCount } from './cat-count.parameter';
+import { CatColor } from './cat-color.parameter';
+import { CatDob } from './cat-dob.parameter';
 
 @Injectable()
 export class CatService {
   constructor(
-    private readonly count: CatCountParameter,
-    private readonly color: CatColorParameter
-  ) {
-
-  }
+    private readonly count: CatCount,
+    private readonly color: CatColor,
+    private readonly dob: CatDob
+  ) {}
 
   meow(memberName: string) {
     const member = this[memberName];
     if (!member) {
       return `${memberName} is not defined in: ${Object.keys(this).sort().join(', ')}`;
     };
-    return `${member.key}: ${typeof member.value} = ${member.value};`;
+    return [JSON.stringify(member, null, 2), typeof member.typedValue].join('\n');
   }
-
 }

@@ -1,14 +1,15 @@
 import "reflect-metadata";
 import * as minimist from 'minimist';
-import * as kebab from 'lodash.kebabcase';
-export const Arg = (ctrFn: Function) =>
+import * as kebabcase from 'lodash.kebabcase';
+export const Arg = (ctrFn: any) =>
     function argDecorator(constructor: any) {
         const args = minimist(process.argv.slice(2), { default: {} });
-        const key = kebab(constructor.name).replace('-parameter', '').toLowerCase();
+        const key = kebabcase(constructor.name).toLowerCase();
 
         return class extends constructor {
-            value = args[key];
-            typedValue = ctrFn(args[key]);
             key = key;
+            source = 'process.argv';
+            typedValue = ctrFn === Number ? ctrFn(args[key]) : new ctrFn(args[key]);
+            value = args[key];
         };
     };

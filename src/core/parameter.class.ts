@@ -1,4 +1,6 @@
 export class Parameter<T> {
     key: string;
-    value: T;
+    source: string;
+    typedValue: T;
+    value: any;
 }

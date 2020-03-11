@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CatService } from './cat.service';
-import { CatCountParameter } from './cat-count.parameter';
-import { CatColorParameter } from './cat-color.parameter';
-const providers = [CatService, CatCountParameter, CatColorParameter];
+import { CatCount } from './cat-count.parameter';
+import { CatColor } from './cat-color.parameter';
+import { CatDob } from './cat-dob.parameter';
+const providers = [CatService, CatCount, CatColor, CatDob];
 @Module({
     providers,
     exports: [...providers]
