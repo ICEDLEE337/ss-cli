@@ -1,4 +1,5 @@
 export class Parameter<T> {
     name: string;
-    value: T;
+    value: any;
+    typedValue: T;
 }
