@@ -20,7 +20,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@onivoro/server-build": "^0.6.0",
+    "@onivoro/server-build": "^0.7.0",
     "@onivoro/server-disk": "^0.1.0",
     "@onivoro/server-parameterization": "^0.3.0",
     "@onivoro/server-process": "^0.45.0",

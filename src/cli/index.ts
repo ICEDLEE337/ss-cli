@@ -1,23 +1,17 @@
 #! /usr/bin/env node
 
+import * as minimist from 'minimist';
 import { exit, listen } from '@onivoro/server-process';
-import { concatMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { deployToLocalstack } from './pdf/deploy-to-localstack';
 
-export const bootstrap = () => {
-  const { stdin, stdout } = listen();
+const { stdout } = listen();
 
-  stdout
-    .pipe(
-      map((o: any) => console.log(o.toString()))
-    )
-    .subscribe();
+stdout
+  .pipe(
+    map((o: any) => console.log(o.toString()))
+  )
+  .subscribe();
 
-  stdin
-    .pipe(
-      concatMap(deployToLocalstack),
-    )
-    .subscribe(stdout.next.bind(stdout), exit(1), exit(0));
-}
-
-bootstrap();
+deployToLocalstack(minimist(process.argv.slice(2)))
+  .subscribe(stdout.next.bind(stdout), exit(1), exit(0));
