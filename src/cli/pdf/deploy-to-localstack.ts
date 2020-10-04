@@ -1,0 +1,8 @@
+#! /usr/bin/env node
+
+// import { S3PublisherService } from '@onivoro/server-build';
+
+import * as minimist from 'minimist';
+
+const argv = minimist(process.argv.slice(2));
+console.log(argv);
